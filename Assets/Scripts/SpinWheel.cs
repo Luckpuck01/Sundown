@@ -34,8 +34,6 @@ public class SpinWheel : MonoBehaviour
             isSpinning = false;
             rb2D.angularVelocity = 0;
         }
-
-        print(Mathf.Abs(rb2D.angularVelocity));
     }
 
     private void SpinTheWheel()

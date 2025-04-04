@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
+    [SerializeField] private static int numberOfPlayers;
+
+    private int currenPlayerTurn;
     // Start is called before the first frame update
     void Start()
     {

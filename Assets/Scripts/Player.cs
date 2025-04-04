@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Plyer : MonoBehaviour
 {
+    private string playerName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +16,15 @@ public class Plyer : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private string GetPlayerName()
+    {
+        return playerName;
+    }
+
+    private void SetPlayerName(string newName)
+    {
+        playerName = newName;
     }
 }
