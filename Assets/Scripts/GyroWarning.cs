@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GyroWarning : MonoBehaviour
 {
-    public bool isCalibrated = false;
+    private static bool isCalibrated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +26,8 @@ public class GyroWarning : MonoBehaviour
         {
             Vector3 gravity = Input.gyro.gravity;
 
-            // Acceptable margin of error
             float tolerance = 0.2f;
 
-            // Check if the phone is being held "straight"
             if (Mathf.Abs(gravity.x) > tolerance || Mathf.Abs(gravity.z) > tolerance)
             {
                 print("Please hold the phone straight before starting!");
@@ -38,10 +36,12 @@ public class GyroWarning : MonoBehaviour
             {
                 print("sPhone is held straight. Starting...");
                 isCalibrated = true;
-
-                // Call your game-start method here
-                // StartGame();
             }
         }
+    }
+
+    public static bool IsCalibrated()
+    {
+        return isCalibrated;
     }
 }

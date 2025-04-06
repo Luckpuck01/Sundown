@@ -5,7 +5,6 @@ using UnityEngine;
 public class GyroControl : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 50f;
-    [SerializeField] private GyroWarning warning;
 
     // Start is called before the first frame update
     void Start()
@@ -16,9 +15,8 @@ public class GyroControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (warning.isCalibrated)
+        if (GyroWarning.IsCalibrated())
         {
-            //sif (Input.gyro.enabled)
             {
                 float zRotation = Input.gyro.rotationRateUnbiased.z;
                 transform.Rotate(0, 0, -zRotation * rotationSpeed * Time.deltaTime);
