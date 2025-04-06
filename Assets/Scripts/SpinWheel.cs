@@ -7,12 +7,14 @@ public class SpinWheel : MonoBehaviour
 {
     [SerializeField] private float spinSpeed;
     [SerializeField] private float wheelMotionlessThreshold = 0.5f;
+    [SerializeField] private Pointer pointer;
 
     private Rigidbody2D rb2D;
     private Vector2 lastTouchPos;
     private bool isDragging;
     private bool isSpinning;
-    
+    private bool hasSpinned; //has already spinned and is currently stationary
+    private bool hasReachedMotionThreshold;
 
     // Start is called before the first frame update
     void Start()
@@ -23,17 +25,32 @@ public class SpinWheel : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount > 0 && !isSpinning)
+        float wheelVelocity = Mathf.Abs(rb2D.angularVelocity);
+
+
+        if (isSpinning)
         {
-            print("Touch");
+            if (!hasReachedMotionThreshold && wheelVelocity > wheelMotionlessThreshold)
+            {
+                hasReachedMotionThreshold = true;
+            }
+
+            if (hasReachedMotionThreshold && wheelVelocity < wheelMotionlessThreshold)
+            {
+                wheelVelocity = 0;
+                hasSpinned = true;
+                isSpinning = false;
+                hasReachedMotionThreshold = false;
+            }
+        }
+
+        if (Input.touchCount > 0 && !isSpinning && !hasSpinned)
+        {
             SpinTheWheel();
         }
 
-        if (isSpinning && Mathf.Abs(rb2D.angularVelocity) < wheelMotionlessThreshold)
-        {
-            isSpinning = false;
-            rb2D.angularVelocity = 0;
-        }
+        pointer.WheelHasSpinned(hasSpinned);
+
     }
 
     private void SpinTheWheel()
@@ -62,5 +79,14 @@ public class SpinWheel : MonoBehaviour
         {
             isDragging = false;
         }
+    }
+
+    public void ResetWheel()
+    {
+        rb2D.angularVelocity = 0;
+        GetComponent<Rigidbody2D>().rotation = 0f;
+        hasSpinned = false;
+        isSpinning = false;
+        hasReachedMotionThreshold = false;
     }
 }

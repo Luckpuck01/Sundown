@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Plyer : MonoBehaviour
+public class Player
 {
     private string playerName;
+
+    private int playerId;
+
+    private int playerScore;
 
     // Start is called before the first frame update
     void Start()
